@@ -297,7 +297,20 @@ export default function Upscaler() {
               {!originalFile && (
                 <div className="flex-1 flex items-center justify-center p-8">
                   <div className="w-full max-w-lg">
-                    <UploadArea onUpload={handleUpload} maxSizeMB={25} />
+                    <UploadArea 
+                      onUpload={handleUpload} 
+                      maxSizeMB={25} 
+                      examples={[
+                        {
+                          url: "https://images.unsplash.com/photo-1552728089-57168bb3e314?auto=format&fit=crop&q=80&w=600",
+                          label: "Bird 1"
+                        },
+                        {
+                          url: "https://images.unsplash.com/photo-1444464666168-49b626f86278?auto=format&fit=crop&q=80&w=600",
+                          label: "Bird 2"
+                        }
+                      ]}
+                    />
                   </div>
                 </div>
               )}

@@ -273,7 +273,13 @@ export default function BackgroundRemover() {
             )}
           </div>
           <div className="lg:col-span-3 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm h-[600px] flex overflow-hidden">
-             {!originalFile && status !== "error" && <div className="m-auto w-full max-w-lg p-8"><UploadArea onUpload={handleUpload} /></div>}
+             {!originalFile && status !== "error" && (
+              <div className="m-auto w-full max-w-lg p-8">
+                <UploadArea 
+                  onUpload={handleUpload} 
+                />
+              </div>
+             )}
              {originalFile && (status === "idle" || status === "error") && <img src={originalUrl!} alt="Original" className="w-full h-full object-contain p-4 bg-slate-100 dark:bg-slate-950" />}
              {status === "processing" && (
                <div className="m-auto text-center">

@@ -158,6 +158,41 @@ async function startServer() {
     }
   });
 
+  // API Route to enhance image prompt
+  app.post("/api/enhance-prompt", async (req, res) => {
+    try {
+      const { prompt } = req.body;
+      if (!prompt) {
+        return res.status(400).json({ error: "No prompt provided" });
+      }
+
+      const apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) {
+        // Fallback to the original prompt if no API key is provided
+        return res.json({ enhancedPrompt: prompt });
+      }
+
+      const ai = new GoogleGenAI({ apiKey });
+      const systemInstruction = "You are an expert AI image generation prompt engineer. Your job is to take a simple prompt from a user and expand it into a highly detailed, visually descriptive prompt suitable for a text-to-image model. Focus on vivid visual details: lighting, camera angle, artistic style, mood, colors, atmosphere, and specific subject details. Output ONLY the enhanced prompt string, without any conversational text, explanations, or quotes.";
+      
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+        config: {
+          systemInstruction: systemInstruction,
+          temperature: 0.7,
+        }
+      });
+      
+      const enhancedPrompt = response.text?.trim() || prompt;
+      res.json({ enhancedPrompt });
+    } catch (error) {
+      console.error("Error in /api/enhance-prompt:", error);
+      // Fallback to original prompt in case of error
+      res.json({ enhancedPrompt: req.body.prompt || "A beautiful highly detailed artwork" });
+    }
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

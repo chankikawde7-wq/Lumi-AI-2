@@ -362,7 +362,10 @@ export default function ImageCompressor() {
           <div className="lg:col-span-3 bg-slate-100 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm h-[600px] flex overflow-hidden relative">
              {!originalFile && status !== "error" && (
                <div className="m-auto w-full max-w-lg p-8">
-                 <UploadArea onUpload={handleUpload} accept="image/jpeg, image/png, image/webp" />
+                 <UploadArea 
+                  onUpload={handleUpload} 
+                  accept="image/jpeg, image/png, image/webp"
+                 />
                </div>
              )}
              

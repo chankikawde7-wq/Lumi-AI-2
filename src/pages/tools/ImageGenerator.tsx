@@ -38,7 +38,6 @@ const promptSuggestions = [
 
 export default function ImageGenerator() {
   const [prompt, setPrompt] = useState("");
-  const [negativePrompt, setNegativePrompt] = useState("");
   const [style, setStyle] = useState("Realistic");
   const [aspectRatio, setAspectRatio] = useState("1:1");
   const [size, setSize] = useState(sizes[2]); // Default 1024x1024
@@ -62,7 +61,7 @@ export default function ImageGenerator() {
     setPrompt(random);
   };
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if (!prompt) return;
     setStatus("generating");
     setProgress(0);
@@ -77,12 +76,20 @@ export default function ImageGenerator() {
       });
     }, 300);
 
-    // Simulate generation using Pollinations.ai
-    setTimeout(() => {
+    try {
+      // Enhance prompt using our backend Gemini API
+      const enhanceRes = await fetch("/api/enhance-prompt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await enhanceRes.json();
+      const enhancedPromptString = data.enhancedPrompt || prompt;
+
       clearInterval(interval);
       setProgress(100);
       
-      const fullPrompt = `${prompt}, ${style} style, ${lighting !== 'None' ? lighting + ' lighting' : ''}, ${cameraAngle !== 'None' ? cameraAngle + ' angle' : ''}, high quality, ${quality}`;
+      const fullPrompt = `${enhancedPromptString}, ${style} style, ${lighting !== 'None' ? lighting + ' lighting' : ''}, ${cameraAngle !== 'None' ? cameraAngle + ' angle' : ''}, high quality, ${quality}`;
       const encodedPrompt = encodeURIComponent(fullPrompt);
       const randomSeed = seed ? seed : Math.floor(Math.random() * 1000000);
       
@@ -103,7 +110,11 @@ export default function ImageGenerator() {
 
       setResultUrl(`https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${randomSeed}&nologo=true`);
       setStatus("success");
-    }, 4000);
+    } catch (error) {
+      console.error("Failed to generate:", error);
+      clearInterval(interval);
+      setStatus("idle");
+    }
   };
 
   const downloadImage = async (format: "png" | "jpg") => {
@@ -314,17 +325,6 @@ export default function ImageGenerator() {
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder="Describe the image you want to generate in detail..."
                   className="w-full h-24 px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none resize-none dark:text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Negative Prompt (What not to include)</label>
-                <input
-                  type="text"
-                  value={negativePrompt}
-                  onChange={(e) => setNegativePrompt(e.target.value)}
-                  placeholder="e.g. blurry, low quality, distorted, extra fingers..."
-                  className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none dark:text-white"
                 />
               </div>
 
