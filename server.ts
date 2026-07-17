@@ -193,6 +193,29 @@ async function startServer() {
     }
   });
 
+  // API Route to proxy external images for examples
+  app.post("/api/proxy-image", async (req, res) => {
+    try {
+      const { url } = req.body;
+      if (!url) {
+        return res.status(400).json({ error: "No URL provided" });
+      }
+
+      const response = await axios({
+        method: "get",
+        url: url,
+        responseType: "arraybuffer",
+      });
+
+      const contentType = response.headers["content-type"] || "image/jpeg";
+      res.set("Content-Type", contentType);
+      res.send(response.data);
+    } catch (error) {
+      console.error("Error proxying image:", error);
+      res.status(500).json({ error: "Failed to proxy image" });
+    }
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

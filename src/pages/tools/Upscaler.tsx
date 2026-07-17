@@ -302,11 +302,11 @@ export default function Upscaler() {
                       maxSizeMB={25} 
                       examples={[
                         {
-                          url: "https://images.unsplash.com/photo-1552728089-57168bb3e314?auto=format&fit=crop&q=80&w=600",
+                          url: "/example1.jpg",
                           label: "Bird 1"
                         },
                         {
-                          url: "https://images.unsplash.com/photo-1444464666168-49b626f86278?auto=format&fit=crop&q=80&w=600",
+                          url: "/example2.jpg",
                           label: "Bird 2"
                         }
                       ]}
@@ -399,6 +399,56 @@ export default function Upscaler() {
           </div>
           
         </div>
+
+        {/* Trust / Examples Showcase Section */}
+        <div className="mt-16 mb-8 max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 flex items-center justify-center gap-2">
+              <Sparkles className="w-6 h-6 text-primary-500" />
+              See the Magic
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+              Don't just take our word for it. See how our AI recovers lost details, removes blur, and enhances colors in seconds.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Example 1 */}
+            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm group">
+              <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+                <img 
+                  src="/example1.jpg" 
+                  alt="Upscaled Bird Example 1" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white px-3 py-1 text-xs font-bold rounded-full border border-white/10 shadow-lg">
+                  Before & After Comparison
+                </div>
+                <div className="absolute bottom-4 right-4 bg-primary-600 text-white px-3 py-1 text-xs font-bold rounded-full shadow-lg flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> AI Enhanced
+                </div>
+              </div>
+            </div>
+
+            {/* Example 2 */}
+            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm group">
+              <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+                <img 
+                  src="/example2.jpg" 
+                  alt="Upscaled Bird Example 2" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white px-3 py-1 text-xs font-bold rounded-full border border-white/10 shadow-lg">
+                  Before & After Comparison
+                </div>
+                <div className="absolute bottom-4 right-4 bg-primary-600 text-white px-3 py-1 text-xs font-bold rounded-full shadow-lg flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> AI Enhanced
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
