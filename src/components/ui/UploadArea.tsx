@@ -73,16 +73,11 @@ export default function UploadArea({
       setLoadingExample(index);
       setError(null);
       
-      let response;
-      if (url.startsWith('/')) {
-        response = await fetch(url);
-      } else {
-        response = await fetch("/api/proxy-image", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url })
-        });
-      }
+      const response = await fetch("/api/proxy-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url })
+      });
 
       if (!response.ok) throw new Error("Failed to load example image");
       

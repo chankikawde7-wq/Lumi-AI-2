@@ -302,11 +302,11 @@ export default function Upscaler() {
                       maxSizeMB={25} 
                       examples={[
                         {
-                          url: "/example1.jpg",
+                          url: "https://images.unsplash.com/photo-1574068468668-a05a11f871da?auto=format&fit=crop&q=80&w=600",
                           label: "Bird 1"
                         },
                         {
-                          url: "/example2.jpg",
+                          url: "https://images.unsplash.com/photo-1580428180098-24b353d7e9d9?auto=format&fit=crop&q=80&w=600",
                           label: "Bird 2"
                         }
                       ]}
@@ -417,7 +417,7 @@ export default function Upscaler() {
             <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm group">
               <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-slate-800">
                 <img 
-                  src="/example1.jpg" 
+                  src="https://images.unsplash.com/photo-1574068468668-a05a11f871da?auto=format&fit=crop&q=80&w=800" 
                   alt="Upscaled Bird Example 1" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -434,7 +434,7 @@ export default function Upscaler() {
             <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm group">
               <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100 dark:bg-slate-800">
                 <img 
-                  src="/example2.jpg" 
+                  src="https://images.unsplash.com/photo-1580428180098-24b353d7e9d9?auto=format&fit=crop&q=80&w=800" 
                   alt="Upscaled Bird Example 2" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
